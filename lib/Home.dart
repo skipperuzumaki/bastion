@@ -13,8 +13,11 @@ class _HomeState extends State<Home> {
 
   IconData val = Icons.sync;
   Color col = Colors.white;
-
+  bool tracing = false;
+  IconData ct = Icons.play_arrow;
+  String cts = 'Start Contact Tracing';
   SendData s_dta = new SendData();
+  Broadcast bdcast = new Broadcast();
 
   @override
   Widget build(BuildContext context) {
@@ -30,18 +33,27 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
             child: RaisedButton(
               onPressed: (){setState(() {
-                val = Icons.block;
-                col = Colors.red;
-                Broadcast(s_dta);
-                //Trace();
+                if (!tracing){
+                  tracing = true;
+                  ct = Icons.stop;
+                  cts = 'Stop Contact Tracing';
+                  bdcast.Start(s_dta);
+                  Trace();
+                }
+                else{
+                  tracing = false;
+                  ct = Icons.play_arrow;
+                  cts = 'Start Contact Tracing';
+                  bdcast.Stop();
+                }
               });
               },
               color: Colors.blue,
               child: Row(
                 children: <Widget>[
-                  Icon(Icons.play_arrow,),
+                  Icon(ct,),
                   SizedBox(width: 10.0,),
-                  Text('Start Contact Tracing')
+                  Text(cts)
                 ],
               ),
             ),
@@ -72,6 +84,8 @@ class _HomeState extends State<Home> {
             child: RaisedButton(
               onPressed: (){
                 setState(() {
+                  val = Icons.block;
+                  col = Colors.red;
                   val = Icons.check_circle;
                   col = Colors.lightGreen;
                 });
