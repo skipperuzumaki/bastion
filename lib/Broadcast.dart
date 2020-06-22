@@ -3,6 +3,7 @@ import 'package:flutter_ble_peripheral/main.dart';
 import 'Cryptography.dart';
 
 class Broadcast {
+  // TODO: Add continously updating advertising
   FlutterBlePeripheral blePeripheral = FlutterBlePeripheral();
   Future<void> Start(SendData s_dta) async {
     AdvertiseData _data = AdvertiseData();
