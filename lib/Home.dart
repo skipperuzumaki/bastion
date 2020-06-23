@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
                   ct = Icons.stop;
                   cts = 'Stop Contact Tracing';
                   bdcast.Start(s_dta);
-                  //Trace();
+                  Trace();
                 }
                 else{
                   tracing = false;

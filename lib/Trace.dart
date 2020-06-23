@@ -10,7 +10,7 @@ void Trace() async {
   var DataStore = File('$path/counter.txt');
   FlutterBlue flutterBlue = FlutterBlue.instance;
   while(true) {
-    await flutterBlue.startScan(timeout: Duration(seconds: 5));
+    await flutterBlue.startScan(timeout: Duration(seconds: 300));
     flutterBlue.scanResults.listen((results) async {
       for (ScanResult r in results) {
         var svuuids = r.advertisementData.serviceUuids;
