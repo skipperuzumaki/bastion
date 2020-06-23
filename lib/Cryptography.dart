@@ -1,22 +1,19 @@
 import 'package:cryptography/cryptography.dart';
 import 'dart:math';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 // TODO: Add File IO
 
 class SendData {
   final algorithm = chacha20;
   SecretKey key;
-  Nonce nonce;
+  Nonce nonce = new Nonce([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
   var rng = new Random();
   SendData() {
-    // try to get key from file
-    // if key not found
-    // store key to file
-    // replace with constant 96 bit nonce
+    get_key_value();
   }
   Future<String> GetString() async {
-    final key = await algorithm.newSecretKey();
-    final nonce = await algorithm.newNonce();
     List<int> vals = new List<int>();
     for (var i = 0; i < 6; i++){
       vals.add(rng.nextInt(256));
@@ -24,7 +21,6 @@ class SendData {
     for (var i = 0; i < 3; i++){
       vals.add(255);
     }
-    print(vals);
     final encrypted = await algorithm.encrypt(
       vals,
       secretKey: key,
@@ -44,6 +40,7 @@ class SendData {
         data.substring(12, 15) + "-8" +
         data.substring(15, 18) + "-" +
         data.substring(18);
+    print(data);
     return data;
   }
   Future<bool> Verify(String data, SecretKey Key) async {
@@ -65,4 +62,27 @@ class SendData {
     }
     return ret;
   }
+
+  void get_key_value() async {
+    final directory = await getApplicationDocumentsDirectory();
+    var path = directory.path;
+    if (await File('$path/Key.txt').exists()) {
+      var Key_value = File('$path/Key.txt');
+      var data = await Key_value.readAsBytes();
+      key = new SecretKey(data);
+    }
+    else{
+      generate_key();
+    }
+  }
+
+  void generate_key() async {
+    key = await algorithm.newSecretKey();
+    final directory = await getApplicationDocumentsDirectory();
+    var path = directory.path;
+    print(path);
+    var Key_value = File('$path/Key.txt');
+    Key_value.writeAsBytes(key.extractSync());
+    print(key.extractSync());
+    }
 }
