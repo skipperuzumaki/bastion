@@ -18,6 +18,7 @@ class _HomeState extends State<Home> {
   String cts = 'Start Contact Tracing';
   SendData s_dta = new SendData();
   Broadcast bdcast = new Broadcast();
+  Tracer ts = new Tracer();
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +33,20 @@ class _HomeState extends State<Home> {
           Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
             child: RaisedButton(
-              onPressed: (){setState(() {
+              onPressed: (){ setState(() {
                 if (!tracing){
                   tracing = true;
                   ct = Icons.stop;
                   cts = 'Stop Contact Tracing';
                   bdcast.Start(s_dta);
-                  Trace();
+                  ts.Trace();
                 }
                 else{
                   tracing = false;
                   ct = Icons.play_arrow;
                   cts = 'Start Contact Tracing';
                   bdcast.Stop();
+                  ts.Run = false;
                 }
               });
               },
@@ -59,6 +61,40 @@ class _HomeState extends State<Home> {
             ),
           ),
           Padding(
+            padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+            child: RaisedButton(
+              onPressed: (){ setState(() {
+                s_dta.generate_key();
+              });
+              },
+              color: Colors.blue,
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.enhanced_encryption,),
+                  SizedBox(width: 10.0,),
+                  Text("Update Encryption Key")
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+            child: RaisedButton(
+              onPressed: (){ setState(() {
+                Navigator.pushNamed(context, '/bt');
+              });
+              },
+              color: Colors.blue,
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.dehaze,),
+                  SizedBox(width: 10.0,),
+                  Text("Show Recieved UUIDS")
+                ],
+              ),
+            ),
+          ),
+          Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
             child: Divider(
               height: 8.0,
@@ -66,46 +102,13 @@ class _HomeState extends State<Home> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
-            child: TextField(
-              cursorColor: Colors.white,
-              decoration: InputDecoration(
-                hintText: 'Enter Pincode',
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    borderSide: BorderSide(color: Colors.white)
-                ),
-              ),
-              keyboardType: TextInputType.number,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
-            child: RaisedButton(
-              onPressed: (){
-                setState(() {
-                  val = Icons.block;
-                  col = Colors.red;
-                  val = Icons.check_circle;
-                  col = Colors.lightGreen;
-                });
-              },
-              color: Colors.blue,
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.sync,),
-                  SizedBox(width: 10.0,),
-                  Text('Check Databases')
-                ],
-              ),
-            ),
-          ),
-          Padding(
             padding: const EdgeInsets.all(50.0),
-            child: Icon(
-              val,
-              color: col,
-              size: 300.0,
+            child: Center(
+              child: Icon(
+                val,
+                color: col,
+                size: 300.0,
+              ),
             ),
           )
         ],

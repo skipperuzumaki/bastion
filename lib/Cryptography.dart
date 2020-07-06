@@ -3,8 +3,6 @@ import 'dart:math';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
-// TODO: Add File IO
-
 class SendData {
   final algorithm = chacha20;
   SecretKey key;
@@ -77,6 +75,7 @@ class SendData {
   }
 
   void generate_key() async {
+    print("Generating Keys");
     key = await algorithm.newSecretKey();
     final directory = await getApplicationDocumentsDirectory();
     var path = directory.path;
