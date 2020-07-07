@@ -26,6 +26,7 @@ dependencies:
   cryptography: ^1.4.1
   flutter_blue: ^0.7.2
   path_provider: ^1.6.11
+  workmanager: ^0.2.0
   flutter_ble_peripheral:
 
 
@@ -39,6 +40,7 @@ dev_dependencies:
   cryptography: ^1.4.1
   flutter_blue: ^0.7.2
   path_provider: ^1.6.11
+  workmanager: ^0.2.0
   flutter_ble_peripheral:
 
 # For information on the generic Dart part of this file, see the

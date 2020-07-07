@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
 class BackTrace extends StatelessWidget {
-  List<Widget> scftree;
+  List<Widget> scftree = new List<Widget>();
   String Key = "Dummy";
   Widget Body = Column();
   void rt() async {
@@ -17,7 +17,7 @@ class BackTrace extends StatelessWidget {
     print(temp);
     var t2 = temp.split("\n");
     t2.forEach((element) {
-      scftree.add(Layout(element));
+      //scftree.add(Layout(element));
     });
     Body = Column(
       children: scftree,

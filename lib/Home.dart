@@ -4,6 +4,7 @@ import 'Trace.dart';
 import 'Broadcast.dart';
 import 'Cryptography.dart';
 
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -18,7 +19,7 @@ class _HomeState extends State<Home> {
   String cts = 'Start Contact Tracing';
   SendData s_dta = new SendData();
   Broadcast bdcast = new Broadcast();
-  Tracer ts = new Tracer();
+  Tracer tr = new Tracer();
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +40,16 @@ class _HomeState extends State<Home> {
                   ct = Icons.stop;
                   cts = 'Stop Contact Tracing';
                   bdcast.Start(s_dta);
-                  ts.Trace();
+                  //Workmanager.registerOneOffTask("1", "Trace");
+                  tr.Trace();
                 }
                 else{
                   tracing = false;
                   ct = Icons.play_arrow;
                   cts = 'Start Contact Tracing';
                   bdcast.Stop();
-                  ts.Run = false;
+                  //Workmanager.cancelAll();
+                  tr.Stop();
                 }
               });
               },
